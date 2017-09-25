@@ -78,12 +78,12 @@ void draw() {
 // **Printing function. Leave here.**
 
 void keyReleased() {
-  if (key == 'c' || key == 'C') GenerativeDesign.saveASE(this, colors, timestamp()+".ase");
+  //if (key == 'c' || key == 'C') GenerativeDesign.saveASE(this, colors, timestamp()+".ase");
   if (key == 's' || key == 'S') saveFrame(timestamp()+"_##.png");
   if (key == 'p' || key == 'P') savePDF = true;
 
-  if (key == '1') interpolateShortest = true;
-  if (key == '2') interpolateShortest = false;
+  //if (key == '1') interpolateShortest = true;
+  //if (key == '2') interpolateShortest = false;
 }
 
 // timestamp

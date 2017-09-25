@@ -17,5 +17,4 @@ void draw (){
   rect(50, 100, 100, 100); //left rectangle
   fill(153,0,153); //purple
   rect (250, 100, 100, 100); //right rectangle
-  
-}
+  }
