@@ -1,9 +1,10 @@
 /* Owen Grimm
- Date
+
+ September 25, 2017
  
- Name of Sketch 
+ exercise_015_03 
  
- Description of sketch 
+ The letter pressed on the keyboard will be the letter that appears on the canvas
  */
 
 void setup() {

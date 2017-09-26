@@ -1,10 +1,10 @@
 /* Owen Grimm
  
- Date
+ September 25, 2017
  
- Name of Sketch 
+ exercise_015_04 
  
- Description of sketch 
+ using conditionals to change the color of the square by pressing a key 
  */
 color a; 
 color b;

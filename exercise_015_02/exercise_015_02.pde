@@ -1,9 +1,10 @@
 /* Owen Grimm
- Date
+
+ September 26, 2017
  
- Name of Sketch 
- 
- Description of sketch 
+exercise_015_02 
+
+ an ellipse will appear on the canvas where ever you press a key
  */
 
 void setup() {
