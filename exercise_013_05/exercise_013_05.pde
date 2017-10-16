@@ -1,10 +1,10 @@
 /* Owen Grimm
  
- Date
+ 10/15/17
  
- Name of Sketch 
+ exercise_13_04
  
- Description of sketch 
+ Use of if...else..if...else statements 
  */
 int x=10;
 int y=20;
