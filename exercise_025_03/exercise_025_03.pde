@@ -2,9 +2,9 @@
 
    12/13/17
    
-   exercise_025_02
+   exercise_025_03
    
-   using rotate and lights
+   using camera
 */
 
 int z= 50;
@@ -17,18 +17,14 @@ void setup(){
 }
 
 void draw (){
-  background(255); //white background
-  noStroke ();
-  translate(0,0);
-  textSize(50); 
+  background(255); //white background  
   fill (255,0,0); //red
-  text("Supreme", 210, 100);
-  translate(width/2, height/2);
+  translate(width/2, mouseY/2,mouseX/2);
   lights(); 
   pushMatrix();
-  
-  rotateX(radians(frameCount)); //rotate x
-  rotateY(radians(frameCount)); //rotate y
+  //camera ();
+  rotateX(radians(mouseX)); //rotate x
+  rotateY(radians(mouseY)); //rotate y
   rotateZ(radians(frameCount)); //rotate z
   box (200, 10, 30);
   box (10, 200, 30);
