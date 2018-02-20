@@ -1,30 +1,22 @@
-//Owen Grimm
-
-//2/12/18
-
-//practicum_07
-
-//using the leap motion to create a finger painting application
+/*
+   Owen Grimm
+   
+   2/16/18
+   
+   leap_motion
+   
+   using the leap motion to create a finger painting application
+   */
 
 
 import de.voidplus.leapmotion.*;
 
 // ======================================================
-// Table of Contents:
-// ├─ 1. Callbacks
-// ├─ 2. Hand
-// ├─ 3. Arms
-// ├─ 4. Fingers
-// ├─ 5. Bones
-// ├─ 6. Tools
-// └─ 7. Devices
-// ======================================================
-
 
 LeapMotion leap;
 
 void setup() {
-  
+  strokeWeight(5);
   size(800, 500);
   background(255);
   // ...
@@ -82,9 +74,9 @@ void draw() {
 
     // --------------------------------------------------
     // Drawing
-   //hand.draw();
+//    hand.draw();
 
-int roll= round(handRoll*10000); // rounds the roll amount to the nearest whole number
+int roll= round(handRoll*10000);
     // ==================================================
     // 3. Arm
 
@@ -130,36 +122,43 @@ int roll= round(handRoll*10000); // rounds the roll amount to the nearest whole 
       PVector fingerVelocity   = finger.getVelocity();
       PVector fingerDirection  = finger.getDirection();
       float   fingerTime       = finger.getTimeVisible();
-
-      // ------------------------------------------------
-      // Drawing
-
-      // Drawing:
-      // finger.draw();  // Executes drawBones() and drawJoints()
-      // finger.drawBones();
-      // finger.drawJoints();
-
-      // ------------------------------------------------
-      // Selection
-
+      println(handPinch);
+      //making the grab value 0-100
+      int grab= round(handGrab*100);
+      //making the pinch value 0-100
+ int pinch= round(handPinch*100);
+ println(grab);
+ //if the pinch value is in the top 25 percent, then it leaves a colored trail for all fingers
+  if((pinch<100)&&(pinch>75)){
+        stroke(random(200), random(200), random(200));
+        point(fingerPosition.x, fingerPosition.y);
+      }
+      //the right hand clenched makes the weight of the lines larger
+      if((grab>90)&&(hand.isRight()==true)){
+        strokeWeight(20);
+      }
+      //the left hand clenched makes the weight of the lines smaller
+      if((grab>90)&&(hand.isLeft()==true)){
+        strokeWeight(5);
+      }
+  
       switch(finger.getType()) {
       case 0:
         // System.out.println("thumb");
         break;
       case 1:
-      int pinch= round(handPinch*100); // makes the value of pinch between 0-100
-      if((roll<9000)&&(roll<-9000)){ // when you roll, the canvas will reset
-      fill(0,200,0);
-      stroke(0);
-       ellipse(fingerPosition.x, fingerPosition.y, 5, 5);
+  //if the hand rolls to a certain degree, it resets the background
+      if((roll<9000)&&(roll<-9000)){
+      
+      background(255);
       }
       else{
-      // background(255);
+      
+    
+       stroke(0);
+       point(fingerPosition.x, fingerPosition.y);
       }
-      if((pinch>200)&&(pinch<-200)){ // when you pinch, the color will change randomly
-        fill(random(100), random(100), random(100));
-        ellipse(fingerPosition.x, fingerPosition.y,5,5);
-      }
+    
         break;
       case 2:
         // System.out.println("middle");
@@ -172,88 +171,4 @@ int roll= round(handRoll*10000); // rounds the roll amount to the nearest whole 
         break;
       }
 
-
-      // ================================================
-      // 5. Bones
-      // --------
-      // https://developer.leapmotion.com/documentation/java/devguide/Leap_Overview.html#Layer_1
-
-      Bone    boneDistal       = finger.getDistalBone();
-      // or                      finger.get("distal");
-      // or                      finger.getBone(0);
-
-      Bone    boneIntermediate = finger.getIntermediateBone();
-      // or                      finger.get("intermediate");
-      // or                      finger.getBone(1);
-
-      Bone    boneProximal     = finger.getProximalBone();
-      // or                      finger.get("proximal");
-      // or                      finger.getBone(2);
-
-      Bone    boneMetacarpal   = finger.getMetacarpalBone();
-      // or                      finger.get("metacarpal");
-      // or                      finger.getBone(3);
-
-      // ------------------------------------------------
-      // Touch emulation
-
-      int     touchZone        = finger.getTouchZone();
-      float   touchDistance    = finger.getTouchDistance();
-
-      switch(touchZone) {
-      case -1: // None
-        break;
-      case 0: // Hovering
-        // println("Hovering (#" + fingerId + "): " + touchDistance);
-        break;
-      case 1: // Touching
-        // println("Touching (#" + fingerId + ")");
-        break;
-      }
-    }
-
-
-    // ==================================================
-    // 6. Tools
-
-    for (Tool tool : hand.getTools()) {
-      int     toolId           = tool.getId();
-      PVector toolPosition     = tool.getPosition();
-      PVector toolStabilized   = tool.getStabilizedPosition();
-      PVector toolVelocity     = tool.getVelocity();
-      PVector toolDirection    = tool.getDirection();
-      float   toolTime         = tool.getTimeVisible();
-
-      // ------------------------------------------------
-      // Drawing:
-      // tool.draw();
-
-      // ------------------------------------------------
-      // Touch emulation
-
-      int     touchZone        = tool.getTouchZone();
-      float   touchDistance    = tool.getTouchDistance();
-
-      switch(touchZone) {
-      case -1: // None
-        break;
-      case 0: // Hovering
-        // println("Hovering (#" + toolId + "): " + touchDistance);
-        break;
-      case 1: // Touching
-        // println("Touching (#" + toolId + ")");
-        break;
-      }
-    }
-  }
-
-
-  // ====================================================
-  // 7. Devices
-
-  for (Device device : leap.getDevices()) {
-    float deviceHorizontalViewAngle = device.getHorizontalViewAngle();
-    float deviceVericalViewAngle = device.getVerticalViewAngle();
-    float deviceRange = device.getRange();
-  }
 }
