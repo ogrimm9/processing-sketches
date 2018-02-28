@@ -26,7 +26,7 @@ boolean handLeft = false; //we assume neither hands are there by default, so we 
 boolean handRight = false;  //we assume neither hands are there by default, so we set both hands to false
   for (Hand hand : leap.getHands ()) { //loops through each hand
 
-     
+
   if (hand.isLeft()) {
     handLeft = true; //sets the value of hand.isLeft
   }
