@@ -12,7 +12,7 @@ void setup () {
   size (400,400);
 }
 void draw(){
-  fill (random(0,200), random (10, 150), random (15,75));
-  ellipse(200,200, random(150,250), random (100, 300));
+  fill (random(0,200), random (10, 150), random (15,75)); //random colors
+  ellipse(200,200, random(150,250), random (100, 300)); // making random sizes for the ellipse
   delay(100);
 }
