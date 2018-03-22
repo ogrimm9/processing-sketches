@@ -15,7 +15,7 @@ float Avel= 0;
 float gravity = 0.01;
 float hite = 320;
 float r = 150;
-float c;
+
 
 void setup () {
   size (600, 600);
