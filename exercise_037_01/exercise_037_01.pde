@@ -26,8 +26,8 @@ void drawCircle (float x, float y, int radius, int num ) {
    int branches= int (random(2,6));
    for (int i=0; i< branches; i++) {
      float a = random (0, TWO_PI);
-     float newx= x +cos(a)* 66.0 * num;
-     float newy= y+ sin(a)* 56.0*num;
+     float newx= x +cos(a)* 2.0 * num;
+     float newy= y+ sin(a)* 2.0*num;
      drawCircle (newx, newy, radius/2, num);
    }
  }     
