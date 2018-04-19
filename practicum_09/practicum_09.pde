@@ -225,7 +225,9 @@ class character {
 
 map b= new map();
 You tst ;
-
+import processing.sound.*;
+SoundFile boing;
+boing = new SoundFile(this, "boing.mp3");
 void setup() {
   size(576, 576);
   b.INIT();
