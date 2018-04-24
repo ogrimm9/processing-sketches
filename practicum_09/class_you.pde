@@ -11,6 +11,7 @@ class You {
   float dirX;
   float dirY;
   int count = 0;
+  int Wee = 0;
   ArrayList<float[]> trail = new ArrayList();
   character YOU;
   You () {
@@ -27,8 +28,7 @@ class You {
 
     for (int i = 0; trail.size() > i; i++) {
       
-boing.play(); 
-      //if(i==0) {
+          //if(i==0) {
       //  trail.get(i)[0] = YOU.x;
       //  trail.get(i)[1] = YOU.y;
       //}else{
@@ -63,6 +63,18 @@ boing.play();
         ang = atan2(tarX-YOU.x, tarY-YOU.y);
         if (dist(tarX, tarY, YOU.x, YOU.y) < 5) {
           P++;
+          if (YOU.hit(MAP, YOU.x + sin(ang), YOU.y + cos(ang))) {
+          //if hitting against wall
+          boing.play();
+          for ( int m = 0; 360 > m; m += 90) {
+            float dir = radians(m);
+            float mx = YOU.x + sin(dir);
+            float my = YOU.y + cos(dir);
+            if (YOU.hit(MAP, mx, my)) {
+              ang = dir + radians(90);
+            }
+          }
+        }
         }
       }
       if (P==2) {
@@ -76,18 +88,9 @@ boing.play();
         if (dist(YOU.x, YOU.y, 288, 288) >= 75) {
           P++;
           angdif = ang + 180;
-        }
-      }
-      if (P==3) {
-        tarX = 288;
-        tarY = 288;
-        ang = atan2(YOU.x-tarX, YOU.y-tarY) + 180;
-        if (dist(tarX, tarY, YOU.x, YOU.y) < 5) {
-          P = 2;
-        }
-
-        if (YOU.hit(MAP, YOU.x + sin(ang), YOU.y + cos(ang))) {
+          if (YOU.hit(MAP, YOU.x + sin(ang), YOU.y + cos(ang))) {
           //if hitting against wall
+          boing.play();
           for ( int m = 0; 360 > m; m += 90) {
             float dir = radians(m);
             float mx = YOU.x + sin(dir);
@@ -97,7 +100,27 @@ boing.play();
             }
           }
         }
-
+        }
+      }
+      if (P==3) {
+        tarX = 288;
+        tarY = 288;
+        ang = atan2(YOU.x-tarX, YOU.y-tarY) + 180;
+        if (dist(tarX, tarY, YOU.x, YOU.y) < 5) {
+          P = 2;
+          if (YOU.hit(MAP, YOU.x + sin(ang), YOU.y + cos(ang))) {
+          //if hitting against wall
+          boing.play();
+          for ( int m = 0; 360 > m; m += 90) {
+            float dir = radians(m);
+            float mx = YOU.x + sin(dir);
+            float my = YOU.y + cos(dir);
+            if (YOU.hit(MAP, mx, my)) {
+              ang = dir + radians(90);
+            }
+          }
+        }
+        }
         if ( count >= 5) {
           ang += 180;
           count = 0;
@@ -129,7 +152,13 @@ boing.play();
     ////
     toAng(0, -1);
 
-    this.calc2(MAP, ang, 5 ); //mandatory, makes you moves, takes angle of movement, and speed as input
+    this.calc2(MAP, ang, 5 );
+    //mandatory, makes you moves, takes angle of movement, and speed as input
+    if (Wee == 0) {
+  //  Wee_Woo.play();
+    Wee=30;
+    }
+    Wee --;
     if (YOU.x != Xpre && YOU.y != Ypre) {
       Xpre = YOU.x;
       Ypre = YOU.y;

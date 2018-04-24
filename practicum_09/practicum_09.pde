@@ -221,15 +221,18 @@ class character {
       energy -= sqrt(speed_)/2;
     }
   }
-}
+} 
 
 map b= new map();
 You tst ;
 import processing.sound.*;
 SoundFile boing;
-boing = new SoundFile(this, "boing.mp3");
+import processing.sound.*;
+SoundFile Wee_Woo;
 void setup() {
   size(576, 576);
+  boing = new SoundFile(this, "boing.ogg");
+  Wee_Woo= new SoundFile (this, "Wee_Woo.mp3");
   b.INIT();
   tst = new You();
 }
