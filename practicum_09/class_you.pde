@@ -6,8 +6,9 @@ class You {
   float tarX = 288;
   float tarY = 288;
   float ang = 0;
-  int P =1;
+  int P =2;
   float C = 0;
+  color invis;
   float dirX;
   float dirY;
   int count = 0;
@@ -17,7 +18,7 @@ class You {
   You () {
     YOU = new character(200, 200, 10);
     ang = atan2(YOU.x-250, YOU.y-250);
-    for (int i = 0; 500 > i; i++) {
+    for (int i = 0; 50 > i; i++) {
       float[] a = {0, 0};
       trail.add(a);
     }
@@ -25,21 +26,27 @@ class You {
   void run(map MAP) {//Avalible functions, part allowed to change
     this.calc();
     ArrayList<float[]> info = MAP.infoSight(YOU).get(0);
+    ArrayList<float[]> info2 = MAP.infoSight(YOU).get(1);
 
     for (int i = 0; trail.size() > i; i++) {
-      
-          //if(i==0) {
+      //if(i==0) {
       //  trail.get(i)[0] = YOU.x;
       //  trail.get(i)[1] = YOU.y;
       //}else{
       //trail.get(i)[0] = trail.get(i-1)[0];
       //trail.get(i)[1] = trail.get(i-1)[1];
       //}
-      colorMode(HSB);
-      fill(C, 255, 255);
-      stroke(C, 255, 255);
-      C = C + 5;
-      C %= 255;
+      if ( dist(tarX, tarY, YOU.x, YOU.y) <= 50) {
+        colorMode(HSB);
+        fill(C, 255, 255);
+        stroke(C, 255, 255);
+        C = C + 5;
+        C %= 255;
+      } else { 
+        invis= get(round(trail.get(i)[0]), round(trail.get(i)[1]));
+        fill(invis);
+        stroke(invis);
+      }
       ellipse(trail.get(i)[0], trail.get(i)[1], 10, 10);
     }
     float[] curpos = {YOU.x, YOU.y};
@@ -58,74 +65,108 @@ class You {
       dirX = sin(ang) * 10;
       dirY = cos(ang) * 10;
       stroke(255, 0, 0);
-      line(YOU.x, YOU.y, dirX + YOU.x, dirY + YOU.y);
+
+
       if (P==1) {
-        ang = atan2(tarX-YOU.x, tarY-YOU.y);
-        if (dist(tarX, tarY, YOU.x, YOU.y) < 5) {
-          P++;
-          if (YOU.hit(MAP, YOU.x + sin(ang), YOU.y + cos(ang))) {
-          //if hitting against wall
-          boing.play();
-          for ( int m = 0; 360 > m; m += 90) {
-            float dir = radians(m);
-            float mx = YOU.x + sin(dir);
-            float my = YOU.y + cos(dir);
-            if (YOU.hit(MAP, mx, my)) {
-              ang = dir + radians(90);
-            }
-          }
-        }
-        }
-      }
-      if (P==2) {
         if (dist(YOU.x, YOU.y, tarX, tarY) < dist(YOU.x, YOU.y, info.get(i)[0], info.get(i)[1])) {
           tarX = info.get(i)[0];
           tarY = info.get(i)[1];
+
+          if (YOU.hit(MAP, YOU.x + sin(ang), YOU.y + cos(ang))) {
+            //if hitting against wall
+            for ( int m = 0; 360 > m; m += 1) {
+              float dir = radians(m);
+              float mx = YOU.x + sin(dir);
+              float my = YOU.y + cos(dir);
+              if (YOU.hit(MAP, mx, my)) {
+                ang = dir + radians(1);
+              }
+            }
+          }
         }
-        if (frameCount % 125 == 0) {
+        if (frameCount % 100 == 0) {
           ang = atan2(YOU.x-tarX, YOU.y-tarY) + radians(180);
         }
-        if (dist(YOU.x, YOU.y, 288, 288) >= 75) {
+        if (dist(YOU.x, YOU.y, 288, 288) >= 100) {
           P++;
           angdif = ang + 180;
-          if (YOU.hit(MAP, YOU.x + sin(ang), YOU.y + cos(ang))) {
-          //if hitting against wall
-          boing.play();
-          for ( int m = 0; 360 > m; m += 90) {
-            float dir = radians(m);
-            float mx = YOU.x + sin(dir);
-            float my = YOU.y + cos(dir);
-            if (YOU.hit(MAP, mx, my)) {
-              ang = dir + radians(90);
-            }
-          }
-        }
         }
       }
-      if (P==3) {
+      if (P==2) {
         tarX = 288;
         tarY = 288;
-        ang = atan2(YOU.x-tarX, YOU.y-tarY) + 180;
+        ang = atan2(YOU.x-tarX, YOU.y-tarY) + (radians(180)+180) /2;
         if (dist(tarX, tarY, YOU.x, YOU.y) < 5) {
-          P = 2;
-          if (YOU.hit(MAP, YOU.x + sin(ang), YOU.y + cos(ang))) {
-          //if hitting against wall
-          boing.play();
-          for ( int m = 0; 360 > m; m += 90) {
-            float dir = radians(m);
-            float mx = YOU.x + sin(dir);
-            float my = YOU.y + cos(dir);
-            if (YOU.hit(MAP, mx, my)) {
-              ang = dir + radians(90);
-            }
-          }
+          P = 1;
         }
-        }
+
+
+
         if ( count >= 5) {
           ang += 180;
           count = 0;
         }
-        if (Xpre != YOU.x && Ypre != YOU.y) {
+
+
+        if (YOU.hit(MAP, YOU.x + sin(ang), YOU.y + cos(ang))) {
+          //if hitting against wall
+          for ( int m = 0; 360 > m; m += 1) {
+            float dir = radians(m);
+            float mx = YOU.x + sin(dir);
+            float my = YOU.y + cos(dir);
+            if (YOU.hit(MAP, mx, my)) {
+              ang = dir + radians(1);
+            }
+          }
+        }
+      }
+
+      if (YOU.hit(MAP, YOU.x + sin(ang), YOU.y + cos(ang))) {
+        //if hitting against wall
+        for ( int m = 0; 360 > m; m += 1) {
+          float dir = radians(m);
+          float mx = YOU.x + sin(dir);
+          float my = YOU.y + cos(dir);
+          if (YOU.hit(MAP, mx, my)) {
+            ang = dir + radians(1);
+          }
+        }
+      }
+      if ( dist (YOU.x, YOU.y, info2.get(0)[0], info2.get(0)[1] ) < 25) {
+        MAP.infoSight(YOU).get(1).get(i)[1] = 0;
+        MAP.infoSight(YOU).get(1).get(i)[0] = 0;
+      }
+      if (YOU.hit(MAP, YOU.x + sin(ang), YOU.y + cos(ang))) {
+        //if hitting against wall
+        for ( int m = 0; 360 > m; m += 1) {
+          float dir = radians(m);
+          float mx = YOU.x + sin(dir);
+          float my = YOU.y + cos(dir);
+          if (YOU.hit(MAP, mx, my)) {
+            ang = dir + radians(1);
+          }
+        }
+      }
+      if (YOU.hit(MAP, YOU.x + sin(ang), YOU.y + cos(ang))) {
+        //if hitting against wall
+        for ( int m = 0; 360 > m; m += 1) {
+          float dir = radians(m);
+          float mx = YOU.x + sin(dir);
+          float my = YOU.y + cos(dir);
+          if (YOU.hit(MAP, mx, my)) {
+            ang = dir + radians(1);
+          }
+        }
+      }
+      if (YOU.hit(MAP, YOU.x + sin(ang), YOU.y + cos(ang))) {
+        //if hitting against wall
+        for ( int m = 0; 360 > m; m += 1) {
+          float dir = radians(m);
+          float mx = YOU.x + sin(dir);
+          float my = YOU.y + cos(dir);
+          if (YOU.hit(MAP, mx, my)) {
+            ang = dir + radians(1);
+          }
         }
       }
     }
@@ -152,31 +193,29 @@ class You {
     ////
     toAng(0, -1);
 
-    this.calc2(MAP, ang, 5 );
-    //mandatory, makes you moves, takes angle of movement, and speed as input
-    if (Wee == 0) {
-  //  Wee_Woo.play();
-    Wee=30;
-    }
-    Wee --;
+    this.calc2(MAP, ang, 5 ); //mandatory, makes you moves, takes angle of movement, and speed as input
     if (YOU.x != Xpre && YOU.y != Ypre) {
-      Xpre = YOU.x;
-      Ypre = YOU.y;
-    } else {
-      count++;
+      if (Wee == 0) {
+        Wee_Woo.play();
+        Wee=50;
+
+        Xpre = YOU.x;
+        Ypre = YOU.y;
+      } else {
+        count++;
+      }
+    }
+
+
+    void calc() {
+      YOU.view();
+      YOU.run();
+    }
+    void toAng(float x, float y ) {
+      //println(degrees(atan2(x,y)));
+    }
+    void calc2(map map, float ang, float speed) {
+      YOU.move(map, ang, min(YOU.maxSpeed, speed) ); //max speed of maxSpeed
+      map.eatan(YOU);
     }
   }
-
-
-  void calc() {
-    YOU.view();
-    YOU.run();
-  }
-  void toAng(float x, float y ) {
-    //println(degrees(atan2(x,y)));
-  }
-  void calc2(map map, float ang, float speed) {
-    YOU.move(map, ang, min(YOU.maxSpeed, speed) ); //max speed of maxSpeed
-    map.eatan(YOU);
-  }
-}
