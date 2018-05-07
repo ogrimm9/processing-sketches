@@ -1,3 +1,10 @@
+/* Owen Grimm
+exercise_040_01
+Anamalito with subclass
+5/2/18
+*/
+
+
 class map {//class to draw the background, **not essential to know for the game** (except for the food functions)
   float[][] walls = new float[int(random(90)) ][4]; //creates random up to 90 walls
   ArrayList<bacteria> food = new ArrayList(); //start list of bacteria, called food
@@ -223,10 +230,12 @@ class character {
   }
 }
 
-map b= new map();
-You tst ;
 import processing.sound.*; //importing processing library
+
+map b= new map();
+Owen tst;
 SoundFile Wee_Woo; //importing sound file Wee_Woo 
+
 void setup() {
   size(576, 576);
 
@@ -234,13 +243,15 @@ void setup() {
 
   b.INIT();
 
-  tst = new You();
+  tst = new Owen();
 }
 void draw() {
   background(255);
 
   b.RUN();
   tst.run(b);
+  tst.weewoo();
+  tst.print_state();
 
   stroke(0, 250, 250);
 }
