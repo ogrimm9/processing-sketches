@@ -1,3 +1,10 @@
+/* Owen Grimm
+Practicum_09
+Anamalito
+5/2/18
+*/
+
+
 class map {//class to draw the background, **not essential to know for the game** (except for the food functions)
   float[][] walls = new float[int(random(90)) ][4]; //creates random up to 90 walls
   ArrayList<bacteria> food = new ArrayList(); //start list of bacteria, called food
